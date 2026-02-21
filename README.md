@@ -86,30 +86,32 @@ No physical circuit is required since the project uses built-in webcam hardware.
 #### Screenshots (Add at least 3)
 
 
-Live webcam detection with eye tracking
+Live webcam detection with eye tracking:
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1d892994-c26a-4b51-a7c9-0b0e23db70f0" />
+
+
+
+Alert triggered after looking down:
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4c5108c6-d703-4c13-888e-c3f8dd0b0ee2" />
 
 
-Alert triggered after looking down
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/ba4a511d-6cc0-42da-bf04-68a284bdbe8e" />
-
 
 User interface and focus status
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1d892994-c26a-4b51-a7c9-0b0e23db70f0" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/ba4a511d-6cc0-42da-bf04-68a284bdbe8e" />
 
 
 #### Diagrams
 
 **System Architecture:**
 
-![Architecture Diagram](docs/architecture.png)
+![Architecture Diagram]
 Camera → Browser → MediaPipe Model → Detection Logic → Alert System
 
 This shows how video input flows through the detection model and triggers feedback.
 
 **Application Workflow:**
 
-![Workflow](docs/workflow.png)
+![Workflow]
 User opens app → grants camera access → gaze detected → timer runs → alert triggered
 
 ---
@@ -121,18 +123,14 @@ User opens app → grants camera access → gaze detected → timer runs → ale
 ## Project Demo
 
 ### Video
-[Add your demo video link here - YouTube, Google Drive, etc.]
+https://drive.google.com/file/d/1aheEwhFSqOHX02_jPSINFTiKS2y8Pnpy/view?ts=69992bcb
 
-*Explain what the video demonstrates - key features, user flow, technical highlights*
+*The demo video shows how the application works in real time. It begins with the user opening the website and granting camera access. The system then detects the face and tracks eye movement continuously. When the user looks straight at the screen, the interface shows a normal status. When the user looks down for a few seconds, a warning appears and an alert sound is triggered. The video highlights the full user flow, including detection accuracy, visual feedback, and the alert mechanism, demonstrating how the system helps users stay focused.*
 
-### Additional Demos
-[Add any extra demo materials/links - Live site, APK download, online demo, etc.]
-
----
 
 ## AI Tools Used (Optional - For Transparency Bonus)
 
-If you used AI tools during development, document them here for transparency:
+
 
 **Tool Used:**  ChatGPT, Claude
 
