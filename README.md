@@ -33,7 +33,7 @@ We built a lightweight web application that monitors gaze direction using comput
 Languages used: JavaScript, HTML, CSS
 Frameworks used: None (pure browser-based implementation)
 Libraries used: MediaPipe Face Landmarker
-Tools used: VS Code, GitHub, Netlify
+Tools used: VS Code, GitHub, Vercel
 
 **For Hardware:**
 Main components: Laptop/PC with webcam
@@ -144,7 +144,7 @@ https://drive.google.com/file/d/1aheEwhFSqOHX02_jPSINFTiKS2y8Pnpy/view?ts=69992b
 • Fix camera rendering issues
 • Generate project documentation
 
-**Percentage of AI-generated code:** [Approximately 25%
+**Percentage of AI-generated code:** [Approximately 25%]
 
 **Human Contributions:**
 • System design
@@ -152,7 +152,7 @@ https://drive.google.com/file/d/1aheEwhFSqOHX02_jPSINFTiKS2y8Pnpy/view?ts=69992b
 • Testing and integration
 • UI styling
 
-*Note: Proper documentation of AI usage demonstrates transparency and earns bonus points in evaluation!*
+
 
 ---
 
