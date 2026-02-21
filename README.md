@@ -10,7 +10,9 @@
 - Member 2: [SHREYA N] - [MITS]
 
 ### Hosted Project Link
-[mention your project hosted link here]
+https://stopscrollingnow.vercel.app/
+
+https://shreyya2006.github.io/STOPSCROLLING/
 
 ### Project Description
 StopScrolling is a browser-based focus assistant that uses the webcam to track eye direction in real time. When the user looks down for a few seconds, the system shows a warning and plays an alert sound to help them stay focused.
@@ -85,12 +87,16 @@ No physical circuit is required since the project uses built-in webcam hardware.
 
 
 Live webcam detection with eye tracking
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4c5108c6-d703-4c13-888e-c3f8dd0b0ee2" />
 
 
 Alert triggered after looking down
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/ba4a511d-6cc0-42da-bf04-68a284bdbe8e" />
 
 
 User interface and focus status
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1d892994-c26a-4b51-a7c9-0b0e23db70f0" />
+
 
 #### Diagrams
 
