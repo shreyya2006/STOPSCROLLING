@@ -12,6 +12,7 @@ const toggleBtn = document.getElementById("soundToggle");
 const warning = document.getElementById("warning");
 const container = document.querySelector(".container");
 
+let faceLandmarker;
 let baselineY = null;
 let startTime = null;
 let alertActive = false;
@@ -30,13 +31,24 @@ toggleBtn.addEventListener("click", () => {
   alertActive = false;
 });
 
-async function init() {
+async function setupCamera() {
+  const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+  video.srcObject = stream;
 
+  return new Promise((resolve) => {
+    video.onloadedmetadata = () => {
+      video.play();
+      resolve();
+    };
+  });
+}
+
+async function loadModel() {
   const vision = await FilesetResolver.forVisionTasks(
     "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
   );
 
-  const faceLandmarker = await FaceLandmarker.createFromOptions(vision, {
+  faceLandmarker = await FaceLandmarker.createFromOptions(vision, {
     baseOptions: {
       modelAssetPath:
         "https://storage.googleapis.com/mediapipe-assets/face_landmarker.task"
@@ -44,35 +56,30 @@ async function init() {
     runningMode: "VIDEO",
     numFaces: 1
   });
-
-  const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-  video.srcObject = stream;
-
-  video.onloadedmetadata = () => {
-    video.play();
-
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-
-    detect(faceLandmarker);
-  };
 }
 
-function detect(faceLandmarker) {
+async function init() {
+  await setupCamera();     // ensure camera renders FIRST
+  await loadModel();       // then load model
 
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+
+  requestAnimationFrame(detect);
+}
+
+function detect() {
   const now = performance.now();
   const result = faceLandmarker.detectForVideo(video, now);
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   if (result.faceLandmarks.length > 0) {
-
     const lm = result.faceLandmarks[0];
     const left = lm[33];
     const right = lm[263];
 
     const eyeY = (left.y + right.y) / 2;
-
     if (!baselineY) baselineY = eyeY;
 
     const displacement = eyeY - baselineY;
@@ -112,13 +119,12 @@ function detect(faceLandmarker) {
     drawBox(right);
   }
 
-  requestAnimationFrame(() => detect(faceLandmarker));
+  requestAnimationFrame(detect);
 }
 
 function drawBox(point) {
   ctx.strokeStyle = lookingDown ? "red" : "lime";
   ctx.lineWidth = 3;
-
   ctx.strokeRect(
     point.x * canvas.width - 40,
     point.y * canvas.height - 20,
