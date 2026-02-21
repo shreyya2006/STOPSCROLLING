@@ -10,6 +10,7 @@ const statusText = document.getElementById("status");
 const alertSound = document.getElementById("alertSound");
 const toggleBtn = document.getElementById("soundToggle");
 const warning = document.getElementById("warning");
+const container = document.querySelector(".container");
 
 let baselineY = null;
 let startTime = null;
@@ -19,7 +20,7 @@ let lookingDown = false;
 
 const THRESHOLD = 0.02;
 const DEAD_ZONE = 0.005;
-const TIME_LIMIT = 3;
+const TIME_LIMIT = 5;
 
 toggleBtn.addEventListener("click", () => {
   soundEnabled = !soundEnabled;
@@ -47,13 +48,17 @@ async function init() {
   const stream = await navigator.mediaDevices.getUserMedia({ video: true });
   video.srcObject = stream;
 
-  video.addEventListener("loadeddata", () => detect(faceLandmarker));
+  video.onloadedmetadata = () => {
+    video.play();
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    detect(faceLandmarker);
+  };
 }
 
 function detect(faceLandmarker) {
-
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
 
   const now = performance.now();
   const result = faceLandmarker.detectForVideo(video, now);
@@ -61,8 +66,8 @@ function detect(faceLandmarker) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   if (result.faceLandmarks.length > 0) {
-    const lm = result.faceLandmarks[0];
 
+    const lm = result.faceLandmarks[0];
     const left = lm[33];
     const right = lm[263];
 
@@ -71,27 +76,27 @@ function detect(faceLandmarker) {
     if (!baselineY) baselineY = eyeY;
 
     const displacement = eyeY - baselineY;
-
     lookingDown = false;
 
     if (Math.abs(displacement) < DEAD_ZONE) {
       baselineY = 0.9 * baselineY + 0.1 * eyeY;
       startTime = null;
       alertActive = false;
-      warning.style.display = "none";
+      warning.classList.remove("show");
+      container.classList.remove("alert");
       statusText.textContent = "Status: Looking Up";
       alertSound.pause();
       alertSound.currentTime = 0;
     }
 
     else if (displacement > THRESHOLD) {
-
       lookingDown = true;
 
       if (!startTime) startTime = Date.now();
       const elapsed = (Date.now() - startTime) / 1000;
 
-      warning.style.display = "block";
+      warning.classList.add("show");
+      container.classList.add("alert");
       statusText.textContent = "Status: Looking Down";
 
       if (elapsed > TIME_LIMIT) {
@@ -113,6 +118,7 @@ function detect(faceLandmarker) {
 function drawBox(point) {
   ctx.strokeStyle = lookingDown ? "red" : "lime";
   ctx.lineWidth = 3;
+
   ctx.strokeRect(
     point.x * canvas.width - 40,
     point.y * canvas.height - 20,
